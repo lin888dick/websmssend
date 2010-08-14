@@ -30,99 +30,49 @@ import javax.microedition.rms.RecordStoreException;
 public class ioSettings {
 
     protected static String getContentLoad(){
-        return getData(MakeFieldName("optim"),1);
+        return getData("optim",1);
     }
+
+    protected static String getDebug(){
+        return getData("debug",1);
+    }
+
     protected static String getUsername(){
-        return getData(MakeFieldName("LoginData"),1);
+        return getData("LoginData",1);
     }
     protected static String getPassword(){
-        return getData(MakeFieldName("LoginData"),2);
+        return getData("LoginData",2);
     }
-    protected static int getRemSMS(){
-        String data = getData(MakeFieldName("remSMS"),1);
-        if (data.equals("")){
-            return -2;//-2 means check remaining SMS
-        }
-        else{
-            return Integer.parseInt(data);
-        }
+    protected static String getRemSMS(){
+        return getData("remSMS",1);
     }
-    protected static int getSetup(){
-        String data = getData(MakeFieldName("setup"),1);
-        if (data.equals("")){
-            return 0;
-        }
-        else{
-            return Integer.parseInt(data);
-        }
-        
-    }
-    protected static String getActiveAccount(){
-        return getData("ActiveAccountNumber",1);
-    }
-    protected static int getSenderMode(){
-        String data = getData(MakeFieldName("SenderSetup"),1);
-        if (data.equals("")){
-            return 0;
-        }
-        else{
-            return Integer.parseInt(data);
-        }
-    }
-    protected static String getSenderName(){
-        String Sender = getData(MakeFieldName("SenderSetup"),2);
-        if (Sender.equals("")) return "Absender"; //Als Standard Absender, damit man auf jeden Fall das Textfeld in smsSettings sieht
-        else return Sender;
-    }
-    protected static String getTempSMSto(){
-        return getData("TempSMS",1);
-    }
-    protected static String getTempSMStext(){
-        return getData("TempSMS",2);
+    protected static String getSetup(){
+        return getData("setup",1);
     }
     protected static int saveToRMS(String username,String password){
         String[] data={username,password};
-        return saveData(MakeFieldName("LoginData"),data,2);
+        return saveData("LoginData",data,2);
     }
     protected static int saveOptim(String contentLoad){
         String[] data={contentLoad};
-        return saveData(MakeFieldName("optim"),data,1);
+        return saveData("optim",data,1);
     }
 
     protected static int saveRemSMS(String remSMS){
         String[] data={remSMS};
-        return saveData(MakeFieldName("remSMS"),data,1);
-    }
-    protected static int saveSetup(String provider){
-        String[] data={provider};
-        return saveData(MakeFieldName("setup"),data,1);
-    }
-    protected static int saveActiveAccount(String AccountNumber){
-        String[] data={AccountNumber};
-        return saveData("ActiveAccountNumber",data,1);
-    }
-    protected static int saveSenderSetup(int SenderMode,String SenderName){
-        String[] data={""+SenderMode,SenderName};
-        return saveData(MakeFieldName("SenderSetup"),data,2);
-    }
-    protected static int saveTempSMS(String smsTo,String smsText){
-        String[] data={smsTo,smsText};
-        return saveData(("TempSMS"),data,2);
+        return saveData("remSMS",data,1);
     }
 
-    private static String MakeFieldName(String Field)
-    {
-        String AccountNumber = getActiveAccount();
-        if (AccountNumber.equals("")) //Kein Account gesetzt--> Account 1 setzen
-        {
-            saveActiveAccount("0");
-            return Field + "0";
-        }
-        else //Standardfall: Irgendein Account ist aktiviert
-        {
-            return Field+AccountNumber;
-        }
+    protected static int saveDebug(String debug){
+        String[] data={debug};
+        return saveData("debug",data,1);
     }
+
+    protected static int saveSetup(String provider){
+        String[] data={provider};
+        return saveData("setup",data,1);
+    }
+
 
     protected static String getData(String field, int nb){
         try {
