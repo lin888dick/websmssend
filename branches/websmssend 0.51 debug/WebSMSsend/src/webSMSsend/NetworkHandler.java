@@ -3,7 +3,7 @@
  *
     Copyright 2009 Max Hänze --- maximum.blogsite.org
     Copyright 2010 Christian Morlok --- cmorlok.de
-
+    2010 C-o-M
     This file is part of WebSMSsend.
 
     WebSMSsend is free software: you can redistribute it and/or modify
