@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#Die aktuellen Release Notes mit Versions-History von webSMSsend.
 
 = Release Notes =
 
