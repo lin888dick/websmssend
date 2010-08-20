@@ -1,5 +1,3 @@
-#Die aktuellen Release Notes mit Versions-History von webSMSsend.
-
 = Release Notes =
 
 Die aktuellen Release Notes zu webSMSsend
