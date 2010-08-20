@@ -1,0 +1,12 @@
+#summary One-sentence summary of this page.
+
+= Release Notes =
+
+Die aktuellen Release Notes zu webSMSsend
+
+
+== 0.62.0 ==
+
+  * O2 funktioniert wieder.
+  * Der O2-Parser versucht sich nun bei kleineren Änderungen selbst zu aktualsieren
+  * *Debug-Meldungen können nun per E-Mail versendet werden*
