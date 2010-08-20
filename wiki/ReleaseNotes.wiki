@@ -2,6 +2,10 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.62.1 ==
+
+  * GMX: viele Debug Meldungen hinzugefügt. Vielleicht hilfts.
+  * Debug E-Mail: Die CC-Adresse wird nun richtig gesetzt
 
 == 0.62.0 ==
 
