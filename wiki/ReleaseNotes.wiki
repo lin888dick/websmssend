@@ -2,9 +2,13 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.62.3 ==
+
+  * Fehler: "Systemspeicher voll" behoben
+
 == 0.62.2 ==
 
-  * Bugfix
+  * Testversion
 
 == 0.62.1 ==
 
