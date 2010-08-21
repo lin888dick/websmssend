@@ -2,6 +2,10 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.62.2 ==
+
+  * Bugfix
+
 == 0.62.1 ==
 
   * GMX: viele Debug Meldungen hinzugefügt. Vielleicht hilfts.
