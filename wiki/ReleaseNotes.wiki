@@ -2,6 +2,11 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.62.4 ==
+
+  * O2: Bei der Auswahl Text als Absender wird nun die Eingabe auf Richtigkeit geprüft (5-10 Zeichen und nur a-z,A-Z)
+  * GMX: beim Versenden von langen SMS wird nun die korrekte Anzahl von den übrigen SMS abgezogen
+
 == 0.62.3 ==
 
   * Fehler: "Systemspeicher voll" behoben
