@@ -2,6 +2,10 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.62.5 ==
+
+  * GMX: Umlaute sollten nun richtig kodiert werden, so dass sie auch in der SMS angezeigt werden
+
 == 0.62.4 ==
 
   * O2: Bei der Auswahl Text als Absender wird nun die Eingabe auf Richtigkeit geprüft (5-10 Zeichen und nur a-z,A-Z)
