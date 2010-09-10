@@ -7,5 +7,5 @@
 
 The integrated development environment (IDE) utilizes the following tools and technologies
   * [http://netbeans.org Netbeans]
-  * Sun java wireless toolkit 2.5 or newer
+  * [http://www.oracle.com/technetwork/java/index-jsp-137162.html Sun Java Wireless Toolkit] 2.5 or newer
   * [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java Development Kit] 
