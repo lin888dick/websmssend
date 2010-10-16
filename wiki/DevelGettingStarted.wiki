@@ -1,4 +1,4 @@
-# summary All tools needed to compile websmssend
+#summary All tools needed to compile websmssend
 = Getting Started =
 
 
