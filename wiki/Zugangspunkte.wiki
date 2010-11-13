@@ -1,4 +1,4 @@
-#Lösungen falls  der SMS-Versand nur im WLAN funktioniert
+# Lösungen falls  der SMS-Versand nur im WLAN funktioniert
 
 = Introduction =
 
