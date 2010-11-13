@@ -1,13 +1,23 @@
 #summary Lösungen falls  der SMS-Versand nur im WLAN funktioniert
 
-= Introduction =
+= Problem =
 
-Add your content here.
+Das Versenden von SMS funktioniert im WLAN problemlos, aber nicht per UMTS/EDGE
+
+= Lösungsvorschläge =
+
+Um die Geschwindigkeit und den Traffic beim mobilen Surfen zu reduzieren, komprimieren die meisten Provider (Vodafone, T-Mobile) die zu übertragende Website und entfernen bestimmte Inhalte (das nennt sich dann "optimieren"). 
+<br>Dies führt jedoch dazu, dass WebSMSsend die Website nicht mehr erkennt, da sie verändert wurde.
+
+*T-Mobile*
+
+  * Mit dem Handy auf http://speed.t-mobile.de surfen
+  * Dort den Speedmanager abschalten
+
+*Vodafone*
+ 
+  * Mit dem Handy auf http://performance.vodafone.de surfen
+  * Dort die Komprimierung komplett deaktivieren
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Da ich O2 habe konnte ich diese Anleitungen nicht überprüfen. Falls eine nicht funktioniert einfach eine E-Mail schreiben oder einen Kommentar hinterlassen
