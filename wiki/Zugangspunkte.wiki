@@ -14,10 +14,10 @@ Um die Geschwindigkeit und den Traffic beim mobilen Surfen zu reduzieren, kompri
   * Mit dem Handy auf http://speed.t-mobile.de surfen
   * Dort den Speedmanager abschalten
 
+Da die Entwickler keine T-Mobile-Kunden sind, konnte diese Anleitung nicht überprüft werden. Falls sie nicht funktioniert, einfach eine E-Mail schreiben oder einen Kommentar hinterlassen.
+
 *Vodafone*
  
+  * Die Paketdaten-Verbindung so konfigurieren, dass webSMSsend den APN web.vodafone.de benutzt
   * Mit dem Handy auf http://performance.vodafone.de surfen
   * Dort die Komprimierung komplett deaktivieren
-
-
-Da ich O2 habe konnte ich diese Anleitungen nicht überprüfen. Falls eine nicht funktioniert einfach eine E-Mail schreiben oder einen Kommentar hinterlassen
