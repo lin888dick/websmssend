@@ -6,7 +6,7 @@ Die aktuellen Release Notes zu webSMSsend
 
   * GMX: Fixed Anzeige der verbleibenden Frei-SMS 
   * GMX: SMS ins Ausland möglich
-  * GMX: Fixed SMS senden per UMTS möglich
+  * GMX: Fixed SMS senden per GPRS möglich
 
   * Allgemein: Abspeichern der temporären SMS nach der Eingabe jedes einzelnen Buchstabens
 
