@@ -4,9 +4,11 @@ Die aktuellen Release Notes zu webSMSsend
 
 == 0.63.0 FAST FERTIG ==
 
+  * GMX: Neues Kommunikations-Interface, basierend auf [https://evolvis.org/scm/viewvc.php/lessismore/LessIsMore-MIDlet-Prototype/trunk/src/org/evolvis/lessismore/ LessIsMore] von fkoester
   * GMX: Fixed Anzeige der verbleibenden Frei-SMS 
   * GMX: SMS ins Ausland möglich
-  * GMX: Fixed SMS senden per GPRS möglich
+  * GMX: Fixed SMS senden per GPRS, auch bei aktivierter Komprimierung, möglich
+  * GMX: Übertragenes Datenvolumen auf ca. 3,5 KB pro SMS reduziert
 
   * Allgemein: Abspeichern der temporären SMS nach der Eingabe jedes einzelnen Buchstabens
 
