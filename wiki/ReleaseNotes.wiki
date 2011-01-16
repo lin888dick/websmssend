@@ -6,6 +6,7 @@ Die aktuellen Release Notes zu webSMSsend
 
   * GMX: Neues Kommunikations-Interface, basierend auf [https://evolvis.org/scm/viewvc.php/lessismore/LessIsMore-MIDlet-Prototype/trunk/src/org/evolvis/lessismore/ LessIsMore] von fkoester
   * GMX: Durch das neue Kommunikations-Interface wird der SMS-Manager-Freischaltcode zum Login benötigt, *nicht mehr das Passwort des GMX-Postfachs*
+  * GMX: ProMail- und TopMail-Kunden müssen nicht mehr zwingend die Startansicht des Webmails auf "Standard" konfigurieren. Die Funktionalität von webSMSsend ist mit dieser Version davon unabhängig.
   * GMX: Fixed Anzeige der verbleibenden Frei-SMS 
   * GMX: SMS ins Ausland möglich
   * GMX: Fixed SMS senden per GPRS, auch bei aktivierter Komprimierung, möglich
