@@ -14,6 +14,7 @@ Die aktuellen Release Notes zu webSMSsend
   * GMX: Senden von MultiSMS bis zu einer Länge von 760 Zeichen (entspricht 5 SMS) möglich (vgl. http://www.gmx.net/gmx-sms)
 
   * Allgemein: Abspeichern der temporären SMS nach der Eingabe jedes einzelnen Buchstabens
+  * Allgemein: Funktion "Letzte SMS" hinzugefügt. Damit kann die letzte SMS mit einem Klick zum Versenden an weitere Personen wiederhergestellt werden
 
 ----
 
