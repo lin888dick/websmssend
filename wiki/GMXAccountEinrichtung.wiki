@@ -1,6 +1,6 @@
 #summary Vorbereitung des GMX-Accounts zum Versand von SMS mit websmssend
 
-_*Die folgende Anleitung gilt bis einschließlich webSMSsend 0.62.7. Ab Version 0.63.0 funktioniert der SMS-Versand mit GMX-Bezahl-Accounts unabhängig von der eingestellten Startansicht.*_
+_*Die folgende Anleitung gilt bis einschließlich webSMSsend 0.62.7. Ab Version 0.63.0 funktioniert der SMS-Versand über GMX unabhängig von der eingestellten Startansicht.*_
 
 = Einleitung =
 
