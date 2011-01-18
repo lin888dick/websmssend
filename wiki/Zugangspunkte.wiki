@@ -17,7 +17,8 @@ Um die Geschwindigkeit und den Traffic beim mobilen Surfen zu reduzieren, kompri
 Da die Entwickler keine T-Mobile-Kunden sind, konnte diese Anleitung nicht überprüft werden. Falls sie nicht funktioniert, einfach eine E-Mail schreiben oder einen Kommentar hinterlassen.
 
 *Vodafone*
- 
+
   * Die Paketdaten-Verbindung so konfigurieren, dass webSMSsend den APN web.vodafone.de benutzt
   * Mit dem Handy auf http://performance.vodafone.de surfen
   * Dort die Komprimierung komplett deaktivieren
+  * Ab Version 0.63.0 können GMX-SMS mit webSMSsend unabhängig von der Wahl des Zugangspunktes und der Komprimierungseinstellung versendet werden 
