@@ -6,13 +6,13 @@ Nichts ist perfekt, auch WebSMSsend nicht.Immer wieder treten Fehler auf, die ga
 
   # Überprüfen ob in den Wikis der Fehler schon beschrieben wurde
   # Überprüfen ob der Fehler unter [http://code.google.com/p/websmssend/issues/list Issues] schon beschrieben wurde, falls nicht ein neues Issue  mit einer Fehlerbeschreibung erstellen
-  #  Die Debug-Meldungen an die Entwickler unter Angabe der Issue Nummer (alle Issues sind nummeriert)
+  #  Die Debug-Meldungen an die Entwickler unter Angabe der Issue Nummer (alle Issues sind nummeriert) versenden
 
 = Wie versende ich die Debug-Meldungen? =
 
-  # Auf Einstellungen-->Optimierung bei Debug ein Häckchen setzen
+  # In Einstellungen-->Optimierung bei Debug ein Häckchen setzen
   # Versuchen den Fehler zu provozieren (meist eine SMS verschicken)
   # In Einstellungen-->Debug Meldungen auf E-Mail senden drücken
   # Falls eine Antwort erwünscht ist die eigene E-Mail-Adresse angeben
-  # Den aufgetreten Fehler kurz beschreiben
+  # Den aufgetreten Fehler kurz beschreiben und die Issue-Nummer angeben
   # Auf Senden drücken
