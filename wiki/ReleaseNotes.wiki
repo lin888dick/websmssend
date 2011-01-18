@@ -2,7 +2,7 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
-== 0.63.0 FAST FERTIG ==
+== 0.63.0  ==
 
   * GMX: Neues Kommunikations-Interface, basierend auf [https://evolvis.org/scm/viewvc.php/lessismore/LessIsMore-MIDlet-Prototype/trunk/src/org/evolvis/lessismore/ LessIsMore] von fkoester
   * GMX: Durch das neue Kommunikations-Interface wird der [GMXSMSManagerFreischaltcode SMS-Manager-Freischaltcode] zum Login benötigt, *nicht mehr das Passwort des GMX-Postfachs*
