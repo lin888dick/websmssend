@@ -15,6 +15,7 @@ Die aktuellen Release Notes zu webSMSsend
 
   * Allgemein: Abspeichern der temporären SMS nach der Eingabe jedes einzelnen Buchstabens
   * Allgemein: Funktion "Letzte SMS" hinzugefügt. Damit kann die letzte SMS mit einem Klick zum Versenden an weitere Personen wiederhergestellt werden
+  * Allgemein: Neues Applikationslogo
 
 ----
 
