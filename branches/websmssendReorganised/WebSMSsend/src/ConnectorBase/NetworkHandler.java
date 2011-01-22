@@ -40,7 +40,7 @@ import webSMSsend.IGui;
 
 public class NetworkHandler {
     private final static String START_LINE_SAVE_NAME = "Startline";
-    private final static String SAVE_NAME = "NetworkHandler";
+
     // taken from ftp://ftp.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1252.TXT
     // the first 128 characters are the same as ASCII
     // undefined chars are replaced by SPACE (0x0020).
@@ -96,12 +96,12 @@ public class NetworkHandler {
     //Save Startline
     private void SaveStartLine(int Startline)
     {
-        GUI.SaveItem(SAVE_NAME, START_LINE_SAVE_NAME, Startline + "");
+        GUI.SaveItem(START_LINE_SAVE_NAME, Startline + "");
     }
 
     private int GetStartLine()
     {
-        String line = GUI.GetItem(SAVE_NAME, START_LINE_SAVE_NAME);
+        String line = GUI.GetItem(START_LINE_SAVE_NAME);
         try {
             return Integer.parseInt(line);
         } catch (Exception ex) {

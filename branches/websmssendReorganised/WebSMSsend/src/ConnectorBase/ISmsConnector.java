@@ -13,6 +13,7 @@ import webSMSsend.IGui;
  */
 public interface ISmsConnector {
 public int RemainingSMS();
+public int MaxFreeSMS();
 public void Initialize(String userName, String passWord, IGui Gui);
 public void Send(String smsRecv, String smsText)throws Exception;
 public void Send(String smsRecv, String smsText, String senderName, boolean simulation)throws Exception;

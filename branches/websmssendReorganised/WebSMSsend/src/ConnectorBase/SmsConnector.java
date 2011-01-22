@@ -13,8 +13,12 @@ import webSMSsend.IGui;
  */
 public abstract class SmsConnector implements ISmsConnector {
 
+protected static final String REMAINING_SMS_FIELD = "RemainingSMS";
+protected static final String MAX_FREE_SMS = "MaxFreeSMS";
+
 protected IGui gui_ = null;
 protected int remsms_ = 0;
+protected int maxfreesms_ = 0;
 protected String password_;
 protected String username_;
 
@@ -24,16 +28,23 @@ protected String username_;
         gui_ = Gui;
     }
 
-    public int RemainingSMS() {
+    public int RemainingSMS() { 
+        try {
+            String remsms = gui_.GetItem(REMAINING_SMS_FIELD);
+            remsms_ = Integer.parseInt(remsms);
+        } catch (Exception ex) {
+            remsms_=0;
+        }
         return remsms_;
     }
 
-    public abstract String PasswordFieldLabel();
-
-    public abstract void Send(String smsRecv, String smsText) throws Exception;
-
-    public abstract void Send(String smsRecv, String smsText, String senderName, boolean simulation) throws Exception ;
-
-    public abstract int CountSms(String smsText);
-
+    public int MaxFreeSMS() {       
+        try {
+            String maxfreesms = gui_.GetItem(MAX_FREE_SMS);
+            maxfreesms_ = Integer.parseInt(maxfreesms);
+        } catch (Exception ex) {
+            maxfreesms_ = 0;
+        }
+        return maxfreesms_;
+    }
 }

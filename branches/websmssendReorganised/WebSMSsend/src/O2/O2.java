@@ -142,9 +142,7 @@ public class O2 extends SmsConnector {
             postRequest = returnValue[0];
 
             try {
-                if (remsms_ != -1) {
                     remsms_ = Integer.parseInt(returnValue[1]);
-                }
             } catch (Exception ex) {
                 gui_.Debug("Failed to receive remaining SMS: " + ex.toString() + ex.getMessage());
             }
@@ -170,6 +168,7 @@ public class O2 extends SmsConnector {
             gui_.Debug("Anzahl SMS: " + SMSneeded);
             gui_.Debug("Fertig mit sendSMS02, Dauer: " + (System.currentTimeMillis() - totaltime) + " ms");
             gui_.SetWaitScreenText("SMS wurde versandt!");
+            gui_.SaveItem(REMAINING_SMS_FIELD, remsms_+"");
 
         } catch (OutOfMemoryError ex) {
             gui_.SetWaitScreenText("Systemspeicher voll!");

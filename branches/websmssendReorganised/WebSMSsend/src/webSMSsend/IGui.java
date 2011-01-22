@@ -12,8 +12,6 @@ package webSMSsend;
 public interface IGui {
 public void Debug(String debugText);
 public void SetWaitScreenText(String Text);
-public void setRemSMS(int remSMS, int maxFreeSMS);
-public int CountSMS(String SmsText);
-public void SaveItem(String sender,String itemName, String content);
-public String GetItem(String sender, String itemName);
+public void SaveItem(String itemName, String content);
+public String GetItem(String itemName);
 }

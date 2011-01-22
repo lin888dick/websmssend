@@ -47,18 +47,17 @@ public class GMX extends SmsConnector {
 
     public static final String WEBSERVICE_URL = "http://app5.wr-gmbh.de/WRServer/WRServer.dll/WR";
     // Maximum SMS length according to http://www.gmx.net/gmx-sms
-    public static final int maxSMSLength = 760;
+    public static final int MAX_SMS_LENGTH = 760;
 
     String customerID;
     String senderPhoneNumber;
-    int maxfreesms;
 
     public String PasswordFieldLabel() {
         return "SMS-Manager Freischaltcode:";
     }
 
     public String getRemSmsText() {
-        return "Verbleibende Frei-SMS: " + remsms_ + "/" + maxfreesms;
+        return "Verbleibende Frei-SMS: " + remsms_ + "/" + maxfreesms_;
     }
 
     public int CountSms(String smsText) {
@@ -189,10 +188,12 @@ public class GMX extends SmsConnector {
 
             remsms_ = remSMS;
             try {
-                maxfreesms = Integer.parseInt(freeMaxMonth);
+                maxfreesms_ = Integer.parseInt(freeMaxMonth);
             } catch (Exception ex) {
-                maxfreesms = 0;
+                maxfreesms_ = 0;
             }
+            gui_.SaveItem(REMAINING_SMS_FIELD, remsms_+"");
+            gui_.SaveItem(MAX_FREE_SMS, maxfreesms_+"");
             gui_.Debug("Fertig mit " + getClass().getName() + ".Send(), Dauer: " + (System.currentTimeMillis() - totaltime) + " ms");
         } catch (OutOfMemoryError ex) {
             gui_.SetWaitScreenText("Systemspeicher voll. " + ex.getMessage());
