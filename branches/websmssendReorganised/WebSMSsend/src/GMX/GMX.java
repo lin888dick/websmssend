@@ -26,7 +26,6 @@
 
 package GMX;
 
-import ConnectorBase.NetworkHandler;
 import ConnectorBase.SmsConnector;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,12 +51,29 @@ public class GMX extends SmsConnector {
     String customerID;
     String senderPhoneNumber;
 
-    public String PasswordFieldLabel() {
+    public String getName() {
+        return "GMX";
+    }
+
+    public String getPasswordFieldLabel() {
         return "SMS-Manager Freischaltcode:";
     }
 
     public String getRemSmsText() {
-        return "Verbleibende Frei-SMS: " + remsms_ + "/" + maxfreesms_;
+        String text = "Verbleibende Frei-SMS: ";
+
+        if (getRemainingSMS() == -1 ) {
+            text += "?";
+        } else {
+            text += remsms_;
+        }
+
+        if (this.getMaxFreeSMS() == -1 ) {
+            text += "/?";
+        } else {
+            text += "/" + maxfreesms_;
+        }
+        return text;
     }
 
     public int CountSms(String smsText) {
@@ -89,15 +105,8 @@ public class GMX extends SmsConnector {
             if (smsText.length() > 760) {
                 throw new Exception("SMS-Text zu lang (max. 760 Zeichen)");
             }
-            
-            /** @todo checkRecv() aus NetworkHandler auslagern, hat m. E. nichts mit
-             * der eigentlichen Aufgabe der Datenübertragung übers Netzwerk zu tun.
-             * Der ideale Ort wäre in SmsConnector als statische Methode, da
-             * sowohl GMX als auch O2 diese Methode nutzen
-             */
-            // Format the receiver's phone number if necessary
-            NetworkHandler connection = new NetworkHandler(username_, password_,gui_);
-            smsRecv = connection.checkRecv(smsRecv);
+
+            smsRecv = checkRecv(smsRecv);
 
             //#if Test
 //#             // Output only on developer site, message contains sensitive data
@@ -192,8 +201,8 @@ public class GMX extends SmsConnector {
             } catch (Exception ex) {
                 maxfreesms_ = 0;
             }
-            gui_.SaveItem(REMAINING_SMS_FIELD, remsms_+"");
-            gui_.SaveItem(MAX_FREE_SMS, maxfreesms_+"");
+            SaveItem(REMAINING_SMS_FIELD, remsms_+"");
+            SaveItem(MAX_FREE_SMS, maxfreesms_+"");
             gui_.Debug("Fertig mit " + getClass().getName() + ".Send(), Dauer: " + (System.currentTimeMillis() - totaltime) + " ms");
         } catch (OutOfMemoryError ex) {
             gui_.SetWaitScreenText("Systemspeicher voll. " + ex.getMessage());
@@ -307,5 +316,4 @@ public class GMX extends SmsConnector {
         //#endif
         return result;
     }
-
 }

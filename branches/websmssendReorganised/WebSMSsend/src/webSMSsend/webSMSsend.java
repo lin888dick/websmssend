@@ -50,7 +50,6 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
     int provider; //0 = O2, 1 = GMX
     boolean contentLoad;
     boolean debug;
-    DebugOutputStream debugOutputStream;
     PrintStream debugPrintStream;
     private long startTime = 0;
     int ActiveAccount; //0=Account1 1=Account2 etc.
@@ -159,15 +158,11 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
     }
 
     private String getPasswordFieldLabel() {
-        return SmsConnector.PasswordFieldLabel();
+        return SmsConnector.getPasswordFieldLabel();
     }
 
     private String getRemSMSText() {
-//        if (SmsConnector.RemainingSMS() != 0 & SmsConnector.MaxFreeSMS() != 0) {
             return SmsConnector.getRemSmsText() + "\nBenutzerkonto " + (ActiveAccount + 1);
-//        } else {
-//            return "Benutzerkonto " + (ActiveAccount + 1);
-//        }
     }
 
     public void SetWaitScreenText(String Text) {
@@ -179,6 +174,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
 
     public void SaveItem(String itemName, String content) {
         String[] data = {content};
+        Debug(itemName + " " + content);
         ioSettings.saveData(ioSettings.MakeFieldName(itemName), data, data.length);
     }
 
@@ -217,6 +213,10 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         } else {
             SmsConnector = new GMX();
         }
+        SmsConnector.Initialize(username, password, GUI);
+        if (stringItem1 != null)
+            stringItem1.setText(getRemSMSText());
+
         System.out.println("ActiveAccount: " + ActiveAccount);
     }
 
@@ -418,7 +418,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
             } else if (command == back) {//GEN-LINE:|7-commandAction|33|184-preAction
                     // write pre-action user code here
                 switchDisplayable(null, getMainMenu());//GEN-LINE:|7-commandAction|34|184-postAction
-                stringItem1.setText(getRemSMSText());
+
             } else if (command == nextSettings) {//GEN-LINE:|7-commandAction|35|173-preAction
                     // write pre-action user code here
                 listAction();//GEN-LINE:|7-commandAction|36|173-postAction
@@ -454,6 +454,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
                     }
                     username = textField1.getString();
                     ioSettings.saveToRMS(username, password);
+                    SyncSettings();
                     switchToPreviousDisplayable();//GEN-LINE:|7-commandAction|44|85-postAction
                     // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|45|110-preAction
@@ -474,13 +475,13 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
                     // write post-action user code here
             } else if (command == okCommand) {//GEN-LINE:|7-commandAction|51|208-preAction
                     if (choiceGroup.isSelected(0)) {
-                        ioSettings.saveOptim("true");
+                        ioSettings.saveOptim("true"); //ToDo right now this is not used. In future it either needs to be removed or implemented
                         contentLoad = true;
                     } else {
                         ioSettings.saveOptim("false");
                         contentLoad = false;
                     }
-                    if (choiceGroup.isSelected(1)) {
+                    if (choiceGroup.isSelected(1)) { //ToDo right now this is not used. In future it either needs to be removed or implemented
                         // ToDo add action to checkbox
                     }
                     if (choiceGroup.isSelected(2)) {
@@ -490,6 +491,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
                         ioSettings.saveDebug("false");
                         debug = false;
                     }
+                    SyncSettings();
                     switchDisplayable(null, getList());//GEN-LINE:|7-commandAction|52|208-postAction
                     // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|53|189-preAction
@@ -507,6 +509,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
                         textField2.setLabel(getPasswordFieldLabel());
                     }
                 }
+                SyncSettings();
                 switchToPreviousDisplayable();//GEN-LINE:|7-commandAction|56|232-postAction
             }//GEN-BEGIN:|7-commandAction|57|227-preAction
         } else if (displayable == setup) {
@@ -525,8 +528,8 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
                     ioSettings.saveDebug("false");
                     ioSettings.saveSetup("" + (provider));
                     ioSettings.saveToRMS(username, password);
-                    SyncSettings();
                     switchDisplayable(null, getMainMenu());//GEN-LINE:|7-commandAction|58|227-postAction
+                    SyncSettings();
                     // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|59|104-preAction
         } else if (displayable == smsSend) {
@@ -1816,6 +1819,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
             SenderMode = choiceGroup4.getSelectedIndex();
             SenderName = txtSenderName.getString();
             ioSettings.saveSenderSetup(SenderMode, SenderName);
+            SyncSettings();
             // write pre-action user code here
             switchDisplayable(null, getList());//GEN-LINE:|336-if|2|337-postAction
             // write post-action user code here

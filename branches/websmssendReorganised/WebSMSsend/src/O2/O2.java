@@ -5,7 +5,6 @@
 
 package O2;
 
-import ConnectorBase.NetworkHandler;
 import ConnectorBase.URLEncoder;
 import ConnectorBase.SmsConnector;
 import java.io.IOException;
@@ -17,12 +16,20 @@ import javax.microedition.pki.CertificateException;
  */
 public class O2 extends SmsConnector {
 
-    public String PasswordFieldLabel() {
+    public String getName() {
+        return "O2";
+    }
+
+    public String getPasswordFieldLabel() {
         return "Passwort:";
     }
 
     public String getRemSmsText() {
-        return "Verbleibende Frei-SMS: " + remsms_;
+        if (this.getRemainingSMS() == -1) {
+            return "Verbleibende Frei-SMS: ?";
+        } else {
+            return "Verbleibende Frei-SMS: " + remsms_;
+        }
     }
     
     public int CountSms(String smsText) {
@@ -60,7 +67,7 @@ public class O2 extends SmsConnector {
             NetworkHandler connection = new NetworkHandler(username_, password_,gui_);
             gui_.SetWaitScreenText("Login wird geladen...");
 
-            smsRecv = connection.checkRecv(smsRecv);
+            smsRecv = checkRecv(smsRecv);
             //#if Test
 //#             // Output only on developer site, message contains sensitive data
 //#             gui_.Debug("Empf\u00E4nger-Handynummer: " + smsRecv);
@@ -137,7 +144,7 @@ public class O2 extends SmsConnector {
 
             String[] returnValue;
             starttime = System.currentTimeMillis();
-            returnValue = connection.getSendPostRequest((remsms_ != -1), SenderMode); //Sendermode: 0=phone number 1=text
+            returnValue = connection.getSendPostRequest(true, SenderMode); //Sendermode: 0=phone number 1=text
             gui_.Debug("Fertig mit getSendPostRequest, Dauer: " + (System.currentTimeMillis() - starttime) + " ms" + "HttpHandler: " + httphandlertime + " ms");
             postRequest = returnValue[0];
 
@@ -168,7 +175,7 @@ public class O2 extends SmsConnector {
             gui_.Debug("Anzahl SMS: " + SMSneeded);
             gui_.Debug("Fertig mit sendSMS02, Dauer: " + (System.currentTimeMillis() - totaltime) + " ms");
             gui_.SetWaitScreenText("SMS wurde versandt!");
-            gui_.SaveItem(REMAINING_SMS_FIELD, remsms_+"");
+            SaveItem(REMAINING_SMS_FIELD, remsms_+"");
 
         } catch (OutOfMemoryError ex) {
             gui_.SetWaitScreenText("Systemspeicher voll!");

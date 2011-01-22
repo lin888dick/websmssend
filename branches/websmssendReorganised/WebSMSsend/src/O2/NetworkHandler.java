@@ -24,7 +24,8 @@
  *
  */
 
-package ConnectorBase;
+package O2;
+import ConnectorBase.URLEncoder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -124,22 +125,6 @@ public class NetworkHandler {
         System.out.println("decoded: " + ret);
         return ret;
     }
-
-    public String checkRecv(String smsRecv){
-//        GUI.debug("checkRecv( " + smsRecv + " )");
-        if(smsRecv.startsWith("0")){
-            if (smsRecv.startsWith("00"))
-            {
-                smsRecv="+".concat(smsRecv.substring(2));
-                return smsRecv;
-            }
-                smsRecv="+49".concat(smsRecv.substring(1));
-        }
-//        GUI.debug("checkRecv return " + smsRecv);
-        return smsRecv;
-    }
-
-
 
     //statical query line 850!
     public String[] getSendPostRequest(boolean getRemSMS, int SENDERMODE) throws Exception{
