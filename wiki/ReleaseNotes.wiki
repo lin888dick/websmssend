@@ -2,6 +2,13 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== Zukünftiges Release ==
+
+  * Allgemein: Falls alle Frei-SMS verbraucht sind wird der Benutzer gefragt, ob er trotzdem senden möchte oder ob er ein anderes Benutzerkonto benützen möchte
+  * Allgemein: Auto-Speichern der SMS kann nun unter Optmierung deaktiviert werden (manche Geräte werden dadruch sehr langsam)
+
+----
+
 == 0.63.0  ==
 
   * GMX: Neues Kommunikations-Interface, basierend auf [https://evolvis.org/scm/viewvc.php/lessismore/LessIsMore-MIDlet-Prototype/trunk/src/org/evolvis/lessismore/ LessIsMore] von fkoester
