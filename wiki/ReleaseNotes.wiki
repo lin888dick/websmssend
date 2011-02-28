@@ -7,6 +7,7 @@ Die aktuellen Release Notes zu webSMSsend
   * Allgemein: Falls alle Frei-SMS verbraucht sind wird der Benutzer gefragt, ob er trotzdem senden möchte oder ob er ein anderes Benutzerkonto benützen möchte
   * Allgemein: Auto-Speichern der SMS kann nun unter Optimierung deaktiviert werden (manche Geräte werden dadurch sehr langsam)
   * Allgemein: Einführung einer Update-Funktion. Nach dem Senden der ersten SMS nach dem Programmstart wird standardmäßig überprüft, ob es eine neue webSMSsend-Version zum Download gibt. Falls ja, erhält der Benutzer einen entsprechenden Hinweis angezeigt und kann die neue Version auch gleich installieren. Diese Funktion kann unter Optimierung deaktiviert werden. Es ist außerdem möglich, manuell über einen Eintrag unter Einstellungen nach einer neuen Version zu suchen.
+  * GMX: Der GMX Connector benutzt seit diesem Release einen anderen Kommunikationsserver als den standardmäßig im GMX-SMS-Manager eingestellten (app3 statt app5). Tests haben gezeigt, dass die Verzögerung zwischen Absenden der SMS und Zustellung beim Empfänger im Mittel erheblich kleiner ist.
 
 ----
 
