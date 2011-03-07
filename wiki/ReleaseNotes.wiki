@@ -2,6 +2,10 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+== 0.64.2 Testversion (kein offizielles Release) ==
+
+  * O2: Accounts die keine Frei-SMS haben können jetzt wieder SMS versenden
+
 == 0.64.1 ==
 
   * GMX: Es wird jetzt korrekt gewarnt, wenn nicht genügend Frei-SMS zum Versenden einer SMS vorhanden sind
