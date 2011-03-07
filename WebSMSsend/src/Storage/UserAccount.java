@@ -22,8 +22,6 @@ along with WebSMSsend.  If not, see <http://www.gnu.org/licenses/>.
  */
 package Storage;
 
-import java.util.Hashtable;
-
 /**
  *
  * @author redrocketracoon@googlemail.com
@@ -37,7 +35,6 @@ public class UserAccount {
     private int provider;
     private int senderMode;
     private String senderName;
-    private ConnectorSettings connectorSettings;
 
     /**
      *
@@ -136,32 +133,6 @@ public class UserAccount {
     public void setSenderName(String senderName) {
         this.senderName = senderName;
         changed();
-    }
-
-    /**
-     * @return user account number, returns -1 if the account is not known to the UserAccountManager.
-     */
-    public int getAccountNumber() {
-        if (accountManager != null){
-            return accountManager.getAccountNumber(this);
-        }else{
-            return -1;
-        }
-    }
-    
-     /**
-     * notifys UserAccount of any changes in one of the ConnectorSettings objects
-     * @param changedAccount
-     */
-    public void update(ConnectorSettings changedConnectorSettings) {
-        changed();
-    }
-
-    public ConnectorSettings getConnectorSettings() {
-        if (connectorSettings == null) {
-            connectorSettings = new ConnectorSettings(this);
-        }
-        return connectorSettings;
     }
 
     private void changed() {

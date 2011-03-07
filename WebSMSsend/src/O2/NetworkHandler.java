@@ -25,7 +25,6 @@
  */
 
 package O2;
-import ConnectorBase.SmsConnector;
 import ConnectorBase.URLEncoder;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +35,7 @@ import javax.microedition.io.HttpConnection;
 import javax.microedition.io.HttpsConnection;
 import javax.microedition.pki.CertificateException;
 import me.regexp.RE;
+import webSMSsend.ConnectorSettings;
 import webSMSsend.IGui;
 
 
@@ -54,7 +54,6 @@ public class NetworkHandler {
     private String content="";
     private String cookie="";
     private IGui GUI;
-    private O2 parent;
 
 
     public String getCookie(){
@@ -77,11 +76,10 @@ public class NetworkHandler {
         cookie=cookie2;
     }
 
-    public NetworkHandler(String usernameIn, String passwordIn, IGui Debugger, O2 parent) {
+    public NetworkHandler(String usernameIn, String passwordIn, IGui parent) {
         username=usernameIn;
         password=passwordIn;
-        GUI = Debugger;
-        this.parent = parent;
+        GUI = parent;
 
         // test if jvm supports cp1252 encoding
         cp1252internal = true;
@@ -100,20 +98,16 @@ public class NetworkHandler {
     //Save Startline
     private void SaveStartLine(int Startline)
     {
-        if (parent != null){
-            parent.saveSetting(START_LINE_SAVE_NAME, Startline + "");
-        }
+        ConnectorSettings.saveItems(START_LINE_SAVE_NAME, Startline + "");
     }
 
-    private int GetStartLine() {
-        int startline=0;
+    private int GetStartLine()
+    {
+        String line = ConnectorSettings.getItem(START_LINE_SAVE_NAME);
         try {
-            if (parent != null) {
-                String line = parent.getSetting(START_LINE_SAVE_NAME);
-                startline = Integer.parseInt(line);
-            }
-        } finally {
-            return startline;
+            return Integer.parseInt(line);
+        } catch (Exception ex) {
+            return 0;
         }
     }
 
@@ -182,15 +176,11 @@ public class NetworkHandler {
         SaveStartLine(startline);
         GUI.debug("Current Startline: " + startline);
         String remSMSstring=null;
-
-        //Try to get remaining SMS if it fails make a debug message and go on
-        try {
+        if (getRemSMS){
             int remSMSline=getRegexLineMatch(lineSplit,"<span class=\"FREESMS\"><strong>Frei-SMS: (.+) Web2SMS noch in diesem Monat mit Ihrem Internet-Pack inklusive!</strong></span><br>",lineSplit.length-smsFormLine,false);
             remSMSstring=lineSplit[remSMSline];
             remSMSstring=getRegexMatch(remSMSstring,"<span class=\"FREESMS\"><strong>Frei-SMS: (.+) Web2SMS noch in diesem Monat mit Ihrem Internet-Pack inklusive!</strong></span><br>",1);
             //System.out.println("remaining SMS: "+remSMSstring);
-        } catch (Exception e){
-            GUI.debug("RemainingSMS konnten nicht ermittelt werden: " + e.getMessage());
         }
 
         System.arraycopy(lineSplit, smsFormLine , argumentStrings, 0, 19);
@@ -206,7 +196,7 @@ public class NetworkHandler {
         }
         String[] returnValue=new String[2];
         returnValue[0]=content;
-        if(remSMSstring != null){
+        if(getRemSMS){
             returnValue[1]=remSMSstring;
         }
         return returnValue;

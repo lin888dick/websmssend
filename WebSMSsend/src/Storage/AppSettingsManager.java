@@ -40,10 +40,8 @@ public class AppSettingsManager extends StorageManager {
     }
 
     public AppSettings getAppSettings() {
-        readAppSettings();
         if (appSettings == null) {
-            //no Appsettings exist therefore create blank one:
-            appSettings = new AppSettings(this);
+            readAppSettings();
         }
         return appSettings;
     }
@@ -92,8 +90,6 @@ public class AppSettingsManager extends StorageManager {
             dos.writeBoolean(appSettings.isSaveEachCharacter());
             dos.writeUTF(appSettings.getTempSmsText());
             dos.writeUTF(appSettings.getTempSmsTo());
-            dos.writeUTF(appSettings.getLastSmsText());
-            dos.writeUTF(appSettings.getLastSmsTo());
 
             baos.close();
             dos.close();
@@ -116,8 +112,6 @@ public class AppSettingsManager extends StorageManager {
             appSettings.setSaveEachCharacter(dis.readBoolean());
             appSettings.setTempSmsText(dis.readUTF());
             appSettings.setTempSmsTo(dis.readUTF());
-            appSettings.setLastSmsText(dis.readUTF());
-            appSettings.setLastSmsTo(dis.readUTF());
 
             bais.close();
             dis.close();
