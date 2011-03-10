@@ -2,8 +2,19 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
-== 0.64.2 Testversion (kein offizielles Release) ==
+== 0.65.0 ==
 
+  * Allgemein: Komplett neue Benutzerverwaltung. Es können nun beliebig viele Benuteraccounts erstellt werden und den Accounts einen Namen gegeben werden (Issue 18)
+  * Allgemein: Beenden-Button im Bildschirm nach der erfolgreichen Übermittlung einer SMS eingefügt
+  * Allgemein: Issue 14 (Sonderzeichen in temporär gespeicherten SMS wurden nicht richtig wiederhergestellt) ist nun gelöst
+  * O2: Patch von Testverion 0.64.2 wurde eingefügt
+
+*In die neue Benutzerverwaltung werden bisherige Benutzerkonten nicht importiert!*
+
+----
+
+== 0.64.2  ==
+Testversion (kein offizielles Release)
   * O2: Accounts die keine Frei-SMS haben können jetzt wieder SMS versenden
 
 == 0.64.1 ==
@@ -16,8 +27,6 @@ Die aktuellen Release Notes zu webSMSsend
   * Allgemein: Auto-Speichern der SMS kann nun unter Optimierung deaktiviert werden (manche Geräte werden dadurch sehr langsam)
   * Allgemein: Einführung einer Update-Funktion. Nach dem Senden der ersten SMS nach dem Programmstart wird standardmäßig überprüft, ob es eine neue webSMSsend-Version zum Download gibt. Falls ja, erhält der Benutzer einen entsprechenden Hinweis angezeigt und kann die neue Version auch gleich installieren. Diese Funktion kann unter Optimierung deaktiviert werden. Es ist außerdem möglich, manuell über einen Eintrag unter Einstellungen nach einer neuen Version zu suchen.
   * GMX: Der GMX Connector benutzt seit diesem Release einen anderen Kommunikationsserver als den standardmäßig im GMX-SMS-Manager eingestellten (app3 statt app5). Tests haben gezeigt, dass die Verzögerung zwischen Absenden der SMS und Zustellung beim Empfänger im Mittel erheblich kleiner ist.
-
-----
 
 == 0.63.0  ==
 
