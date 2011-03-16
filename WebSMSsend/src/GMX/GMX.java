@@ -26,13 +26,17 @@
 
 package GMX;
 
+import ConnectorBase.Base64Coder;
 import ConnectorBase.SmsConnector;
 import ConnectorBase.Properties;
 import ConnectorBase.SmsData;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -352,8 +356,14 @@ public class GMX extends SmsConnector {
             gui.setWaitScreenText("Systemspeicher voll. " + ex.getMessage());
             Thread.sleep(3000);
             throw ex;
+        } catch (UnsupportedEncodingException ex) {
+            gui.setWaitScreenText("Zeichenkodierung nicht unterst\u20aczt: " + ex.getMessage());
+            ex.printStackTrace();
+            Thread.sleep(3000);
+            throw ex;
         } catch (Exception ex) {
             gui.setWaitScreenText("SMS nicht gesendet: " + ex.getMessage());
+            ex.printStackTrace();
             Thread.sleep(3000);
             throw ex;
         } catch (Throwable e) {
@@ -411,9 +421,11 @@ public class GMX extends SmsConnector {
         connection.setRequestProperty("Accept", "*/*");
         connection.setRequestProperty("Content-Type", "text/plain");
         connection.setRequestProperty("Content-Encoding", "wr-cs");
+//        connection.setRequestProperty("Transfer-Encoding", "identity");
         connection.setRequestProperty("User-Agent", "Mozilla/3.0 (compatible)");
 
-        Writer writer = new OutputStreamWriter(connection.openOutputStream());
+//        Writer writer = new OutputStreamWriter(connection.openOutputStream());
+        OutputStream os = connection.openOutputStream();
 
         //#if Test
 //#         // Output only on developer site, message contains sensitive data
@@ -421,15 +433,28 @@ public class GMX extends SmsConnector {
         //#endif
         
         String request = createRequest(method, version, params, gmxFlag);
+        byte[] reqEnc = encodeIso8859_15(request.toCharArray());
+        
         //#if Test
 //#         // Output as is only on developer site, message contains sensitive data
-//#         gui.debug("Serveranfrage: " + request);
+//#         gui.debug("Serveranfrage:   " + request);
+//#         gui.debug("Anfrage kodiert: " + new String(reqEnc));
         //#else
         gui.debug("Serveranfrage: " + anonymizeProtocolMsg(request));
         //#endif
-        
-        writer.write(request);
-        writer.flush();
+
+//        String enc = new String(encodeIso8859_15(("€").toCharArray()));
+//
+//        System.out.println("Encoded: " + enc);
+//        System.out.println("Decoded: " + new String(decodeIso8859_15(enc.getBytes())));
+//        for (int i=0; i< test.length; i++) {
+//            System.out.println(Integer.toHexString(test[i]));
+//        }
+//        os.write(request.getBytes(), 0, request.getBytes().length);
+        os.write(reqEnc, 0, reqEnc.length);
+
+//        writer.write(request);
+//        writer.flush();
 
         int responseCode = connection.getResponseCode();
         if (responseCode != HttpConnection.HTTP_OK) {
@@ -437,14 +462,18 @@ public class GMX extends SmsConnector {
                     + ", Grund: " + connection.getResponseMessage());
         }
 
-        Reader reader = new InputStreamReader(connection.openInputStream());
+//        Reader reader = new InputStreamReader(connection.openInputStream());
+        InputStream is = connection.openInputStream();
 
         int length = (int) connection.getLength();
         gui.debug("Empfange " + length + " Bytes...");
 
-        char[] buffer = new char[length];
-        reader.read(buffer, 0, length);
-        String asString = String.valueOf(buffer);
+//        char[] buffer = new char[length];
+//        reader.read(buffer, 0, length);
+        byte[] buffer = new byte[length];
+        is.read(buffer, 0, length);
+
+        String asString = new String(decodeIso8859_15(buffer));
 
         //#if Test
 //#         // Output as is only during development, message contains sensitive data
@@ -459,10 +488,74 @@ public class GMX extends SmsConnector {
 
         String line = asString.substring(asString.indexOf("<WR TYPE=\"RSPNS\""), asString.indexOf("</WR>") + 5);
 
-        writer.close();
-        reader.close();
+        is.close();
+        os.close();
+//        writer.close();
+//        reader.close();
 
         return parseResponse(line);
+    }
+
+
+    private byte[] encodeIso8859_15(char[] string) {
+        byte[] isoString = new byte[0];
+
+        Hashtable isoChars = new Hashtable();
+        isoChars.put("\u20ac", new Byte((byte) 0xa4)); // EURO SIGN
+        isoChars.put("\u0160", new Byte((byte) 0xa6)); // LATIN CAPITAL LETTER S WITH CARON
+        isoChars.put("\u0161", new Byte((byte) 0xa8)); // LATIN SMALL LETTER S WITH CARON
+        isoChars.put("\u017d", new Byte((byte) 0xb4)); // LATIN CAPITAL LETTER Z WITH CARON
+        isoChars.put("\u017e", new Byte((byte) 0xb8)); // LATIN SMALL LETTER Z WITH CARON
+        isoChars.put("\u0152", new Byte((byte) 0xbc)); // LATIN CAPITAL LIGATURE OE
+        isoChars.put("\u0153", new Byte((byte) 0xbd)); // LATIN SMALL LIGATURE OE
+        isoChars.put("\u0178", new Byte((byte) 0xbe)); // LATIN CAPITAL LETTER Y WITH DIAERESIS
+
+        for (int i = 0; i < string.length; i++) {
+            byte[] extended = new byte[isoString.length + 1];
+            System.arraycopy(isoString, 0, extended, 0, isoString.length);
+            isoString = extended;
+
+            if (isoChars.containsKey("" + string[i])) {
+                Byte subst = (Byte) isoChars.get("" + string[i]);
+//                System.out.println("Subst: " + subst);
+                isoString[isoString.length - 1] = subst.byteValue();
+//                System.out.println(Integer.toHexString(isoString[isoString.length - 1]));
+            } else {
+                isoString[isoString.length - 1] = (byte) string[i];
+            }
+        }
+        return isoString;
+    }
+
+    private char[] decodeIso8859_15(byte[] bytes) {
+        char[] utfString = new char[0];
+
+        Hashtable isoChars = new Hashtable();
+        isoChars.put(new Byte((byte) 0xa4), "\u20ac"); // EURO SIGN
+        isoChars.put(new Byte((byte) 0xa6), "\u0160"); // LATIN CAPITAL LETTER S WITH CARON
+        isoChars.put(new Byte((byte) 0xa8), "\u0161"); // LATIN SMALL LETTER S WITH CARON
+        isoChars.put(new Byte((byte) 0xb4), "\u017d"); // LATIN CAPITAL LETTER Z WITH CARON
+        isoChars.put(new Byte((byte) 0xb8), "\u017e"); // LATIN SMALL LETTER Z WITH CARON
+        isoChars.put(new Byte((byte) 0xbc), "\u0152"); // LATIN CAPITAL LIGATURE OE
+        isoChars.put(new Byte((byte) 0xbd), "\u0153"); // LATIN SMALL LIGATURE OE
+        isoChars.put(new Byte((byte) 0xbe), "\u0178"); // LATIN CAPITAL LETTER Y WITH DIAERESIS
+
+        for (int i = 0; i < bytes.length; i++) {
+            char[] extended = new char[utfString.length + 1];
+            System.arraycopy(utfString, 0, extended, 0, utfString.length);
+            utfString = extended;
+
+            Byte b = new Byte(bytes[i]);
+            if (isoChars.containsKey(b)) {
+                String subst = (String) isoChars.get(b);
+//                System.out.println("Subst: " + subst);
+                utfString[utfString.length - 1] = subst.charAt(0);
+//                System.out.println("" + (utfString[utfString.length - 1]));
+            } else {
+                utfString[utfString.length - 1] = (char) bytes[i];
+            }
+        }
+        return utfString;
     }
 
     /**
