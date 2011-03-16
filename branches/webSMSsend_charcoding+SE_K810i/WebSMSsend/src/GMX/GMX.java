@@ -26,18 +26,13 @@
 
 package GMX;
 
-import ConnectorBase.Base64Coder;
 import ConnectorBase.SmsConnector;
 import ConnectorBase.Properties;
 import ConnectorBase.SmsData;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.microedition.io.Connector;
