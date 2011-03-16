@@ -2396,6 +2396,8 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
             props.append(System.getProperty("microedition.profiles"));
             props.append("\nmicroedition.platform: ");
             props.append(System.getProperty("microedition.platform"));
+            props.append("\ncom.sonyericsson.java.platform: ");
+            props.append(System.getProperty("com.sonyericsson.java.platform"));
             props.append("\nmicroedition.encoding: ");
             props.append(System.getProperty("microedition.encoding"));
             props.append("\nmicroedition.locale: ");
