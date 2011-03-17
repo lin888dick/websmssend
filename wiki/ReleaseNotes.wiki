@@ -13,6 +13,10 @@ Die aktuellen Release Notes zu webSMSsend
 
 ----
 
+== bisher unveröffentlicht ==
+  * GMX: Abbruch des Versands unter Windows Mobile 6.5 mit AplixJBlend Java-VM behoben
+  * GMX: Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben
+
 == 0.64.2  ==
 Testversion (kein offizielles Release)
   * O2: Accounts die keine Frei-SMS haben können jetzt wieder SMS versenden
