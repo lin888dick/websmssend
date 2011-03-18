@@ -15,7 +15,7 @@ Die aktuellen Release Notes zu webSMSsend
 
 == bisher unveröffentlicht ==
   * GMX: Abbruch des Versands unter Windows Mobile 6.5 mit AplixJBlend Java-VM behoben
-  * GMX: Kodierung der zu übertragenden Zeichen eingeführt, so dass Sonderzeichen in SMS genutzt werden können (vgl. Issue 14) und Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben sind.
+  * GMX: Kodierung der zu übertragenden Zeichen eingeführt, so dass Sonderzeichen in SMS korrekt versendet werden (vgl. Issue 14) und Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben sind.
   * GMX: Berechnung der benötigten SMS bezieht Zeichen, die von GMX als zwei Zeichen gewertet werden, mit ein.
 
 == 0.64.2  ==
