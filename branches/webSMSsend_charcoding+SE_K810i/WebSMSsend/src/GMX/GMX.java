@@ -147,9 +147,27 @@ public class GMX extends SmsConnector {
      * @return the number of SMS the sent text will result in.
      */
     public int countSms(String smsText) {
-        if (smsText.length() > 160) {
-            return (int) Math.floor((smsText.length() + 151) / 152);
-        } else if (smsText.length() == 0) {
+        // Taken from the web SMS manager:
+        // (^ { } \ [ ~ ] | € are special characters and count twice; if they are
+        //  at the last position of a sms part, they have to be moved into the
+        //  next SMS, since we don't want such a character to be split over 2
+        //  message parts)
+
+        // Count the special characters
+        char[] specialChars = "^{}\\[~]|€".toCharArray();
+        int addChars = 0;
+        for (int i = 0; i < specialChars.length; i++) {
+            int start = smsText.indexOf(specialChars[i]);
+            while (start != -1) {
+                addChars++;
+                start = smsText.indexOf(specialChars[i], ++start);
+            }
+        }
+
+        int completeLength = smsText.length() + addChars;
+        if (completeLength > 160) {
+            return (int) Math.floor((completeLength + 151) / 152);
+        } else if (completeLength == 0) {
             return 0;
         } else {
             return 1;
@@ -178,7 +196,7 @@ public class GMX extends SmsConnector {
      public int send(SmsData sms) throws Exception {
         try {
             gui = sms.getGui();
-            gui.debug("Starte " + getClass().getName() + ".Send()"
+            gui.debug("Starte " + getClass().getName() + ".send()"
                     + (sms.isSimulation() ? " SIMULATION!" : ""));
             long totaltime = System.currentTimeMillis();
 
@@ -236,7 +254,7 @@ public class GMX extends SmsConnector {
 
             int senderPhoneNumberConfirmed = Integer.parseInt(result.get("cell_phone_confirmed").toString());
             if(senderPhoneNumberConfirmed != 1) {
-                throw new Exception("Handynummer im GMX SMS-Manager nicht bestätigt");
+                throw new Exception("Handynummer im GMX SMS-Manager nicht best\u00E4tigt");
             }
             
             Object customerIDObj = result.get("customer_id");
@@ -297,7 +315,7 @@ public class GMX extends SmsConnector {
 
             params.put("customer_id", customerID);
             params.put("receivers", "\\<TBL ROWS=\"1\" COLS=\"3\"\\>receiver_id\\\\;receiver_name\\\\;receiver_number\\\\;1\\\\;Bla\\\\;" + smsRecv + "\\\\;\\</TBL\\>");
-            params.put("sms_text", sms.getSmsText());
+            params.put("sms_text", maskSpecialChars(sms.getSmsText()));
             params.put("send_option", "sms");
             params.put("sms_sender", senderPhoneNumber);
 
@@ -352,13 +370,11 @@ public class GMX extends SmsConnector {
             Thread.sleep(3000);
             throw ex;
         } catch (UnsupportedEncodingException ex) {
-            gui.setWaitScreenText("Zeichenkodierung nicht unterst\u20aczt: " + ex.getMessage());
-            ex.printStackTrace();
+            gui.setWaitScreenText("Zeichenkodierung nicht unterst\u00FCzt: " + ex.getMessage());
             Thread.sleep(3000);
             throw ex;
         } catch (Exception ex) {
             gui.setWaitScreenText("SMS nicht gesendet: " + ex.getMessage());
-            ex.printStackTrace();
             Thread.sleep(3000);
             throw ex;
         } catch (Throwable e) {
@@ -411,16 +427,12 @@ public class GMX extends SmsConnector {
         if (connection == null) {
             throw new RuntimeException("Konnte keine Verbindung zum Server aufbauen");
         }
-
+        
         connection.setRequestMethod(HttpConnection.POST);
         connection.setRequestProperty("Accept", "*/*");
         connection.setRequestProperty("Content-Type", "text/plain");
         connection.setRequestProperty("Content-Encoding", "wr-cs");
-//        connection.setRequestProperty("Transfer-Encoding", "identity");
         connection.setRequestProperty("User-Agent", "Mozilla/3.0 (compatible)");
-
-//        Writer writer = new OutputStreamWriter(connection.openOutputStream());
-        OutputStream os = connection.openOutputStream();
 
         //#if Test
 //#         // Output only on developer site, message contains sensitive data
@@ -428,28 +440,21 @@ public class GMX extends SmsConnector {
         //#endif
         
         String request = createRequest(method, version, params, gmxFlag);
-        byte[] reqEnc = encodeIso8859_15(request.toCharArray());
-        
+        byte[] reqEnc = encodeCP1252(request.toCharArray());
+
         //#if Test
 //#         // Output as is only on developer site, message contains sensitive data
-//#         gui.debug("Serveranfrage:   " + request);
-//#         gui.debug("Anfrage kodiert: " + new String(reqEnc));
+//#         gui.debug("Serveranfrage: " + new String(decodeCP1252(reqEnc)));
         //#else
-        gui.debug("Serveranfrage: " + anonymizeProtocolMsg(request));
+        gui.debug("Serveranfrage: " + anonymizeProtocolMsg(new String(decodeCP1252(reqEnc))));
         //#endif
 
-//        String enc = new String(encodeIso8859_15(("€").toCharArray()));
-//
-//        System.out.println("Encoded: " + enc);
-//        System.out.println("Decoded: " + new String(decodeIso8859_15(enc.getBytes())));
-//        for (int i=0; i< test.length; i++) {
-//            System.out.println(Integer.toHexString(test[i]));
-//        }
-//        os.write(request.getBytes(), 0, request.getBytes().length);
-        os.write(reqEnc, 0, reqEnc.length);
+        connection.setRequestProperty("Content-Length", "" + reqEnc.length);
 
-//        writer.write(request);
-//        writer.flush();
+        OutputStream os = connection.openOutputStream();
+        os.write(reqEnc, 0, reqEnc.length);
+        os.close();
+        gui.debug("Bytes \u00FCbertragen: " + connection.getRequestProperty("Content-Length"));
 
         int responseCode = connection.getResponseCode();
         if (responseCode != HttpConnection.HTTP_OK) {
@@ -457,18 +462,16 @@ public class GMX extends SmsConnector {
                     + ", Grund: " + connection.getResponseMessage());
         }
 
-//        Reader reader = new InputStreamReader(connection.openInputStream());
         InputStream is = connection.openInputStream();
 
         int length = (int) connection.getLength();
         gui.debug("Empfange " + length + " Bytes...");
 
-//        char[] buffer = new char[length];
-//        reader.read(buffer, 0, length);
         byte[] buffer = new byte[length];
         is.read(buffer, 0, length);
+        is.close();
 
-        String asString = new String(decodeIso8859_15(buffer));
+        String asString = new String(decodeCP1252(buffer));
 
         //#if Test
 //#         // Output as is only during development, message contains sensitive data
@@ -483,57 +486,93 @@ public class GMX extends SmsConnector {
 
         String line = asString.substring(asString.indexOf("<WR TYPE=\"RSPNS\""), asString.indexOf("</WR>") + 5);
 
-        is.close();
-        os.close();
-//        writer.close();
-//        reader.close();
-
         return parseResponse(line);
     }
 
-
-    private byte[] encodeIso8859_15(char[] string) {
+    private byte[] encodeCP1252(char[] string) {
         byte[] isoString = new byte[0];
 
-        Hashtable isoChars = new Hashtable();
-        isoChars.put("\u20ac", new Byte((byte) 0xa4)); // EURO SIGN
-        isoChars.put("\u0160", new Byte((byte) 0xa6)); // LATIN CAPITAL LETTER S WITH CARON
-        isoChars.put("\u0161", new Byte((byte) 0xa8)); // LATIN SMALL LETTER S WITH CARON
-        isoChars.put("\u017d", new Byte((byte) 0xb4)); // LATIN CAPITAL LETTER Z WITH CARON
-        isoChars.put("\u017e", new Byte((byte) 0xb8)); // LATIN SMALL LETTER Z WITH CARON
-        isoChars.put("\u0152", new Byte((byte) 0xbc)); // LATIN CAPITAL LIGATURE OE
-        isoChars.put("\u0153", new Byte((byte) 0xbd)); // LATIN SMALL LIGATURE OE
-        isoChars.put("\u0178", new Byte((byte) 0xbe)); // LATIN CAPITAL LETTER Y WITH DIAERESIS
+        Hashtable unicodeToCP1252 = new Hashtable();
+        unicodeToCP1252.put("\u20AC", new Byte((byte) 0x80)); //EURO SIGN
+        unicodeToCP1252.put("\u201A", new Byte((byte) 0x82)); //SINGLE LOW-9 QUOTATION MARK
+        unicodeToCP1252.put("\u0192", new Byte((byte) 0x83)); //LATIN SMALL LETTER F WITH HOOK
+        unicodeToCP1252.put("\u201E", new Byte((byte) 0x84)); //DOUBLE LOW-9 QUOTATION MARK
+        unicodeToCP1252.put("\u2026", new Byte((byte) 0x85)); //HORIZONTAL ELLIPSIS
+        unicodeToCP1252.put("\u2020", new Byte((byte) 0x86)); //DAGGER
+        unicodeToCP1252.put("\u2021", new Byte((byte) 0x87)); //DOUBLE DAGGER
+        unicodeToCP1252.put("\u02C6", new Byte((byte) 0x88)); //MODIFIER LETTER CIRCUMFLEX ACCENT
+        unicodeToCP1252.put("\u2030", new Byte((byte) 0x89)); //PER MILLE SIGN
+        unicodeToCP1252.put("\u0160", new Byte((byte) 0x8A)); //LATIN CAPITAL LETTER S WITH CARON
+        unicodeToCP1252.put("\u2039", new Byte((byte) 0x8B)); //SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+        unicodeToCP1252.put("\u0152", new Byte((byte) 0x8C)); //LATIN CAPITAL LIGATURE OE
+        unicodeToCP1252.put("\u017D", new Byte((byte) 0x8E)); //LATIN CAPITAL LETTER Z WITH CARON
+        unicodeToCP1252.put("\u2018", new Byte((byte) 0x91)); //LEFT SINGLE QUOTATION MARK
+        unicodeToCP1252.put("\u2019", new Byte((byte) 0x92)); //RIGHT SINGLE QUOTATION MARK
+        unicodeToCP1252.put("\u201C", new Byte((byte) 0x93)); //LEFT DOUBLE QUOTATION MARK
+        unicodeToCP1252.put("\u201D", new Byte((byte) 0x94)); //RIGHT DOUBLE QUOTATION MARK
+        unicodeToCP1252.put("\u2022", new Byte((byte) 0x95)); //BULLET
+        unicodeToCP1252.put("\u2013", new Byte((byte) 0x96)); //EN DASH
+        unicodeToCP1252.put("\u2014", new Byte((byte) 0x97)); //EM DASH
+        unicodeToCP1252.put("\u02DC", new Byte((byte) 0x98)); //SMALL TILDE
+        unicodeToCP1252.put("\u2122", new Byte((byte) 0x99)); //TRADE MARK SIGN
+        unicodeToCP1252.put("\u0161", new Byte((byte) 0x9A)); //LATIN SMALL LETTER S WITH CARON
+        unicodeToCP1252.put("\u203A", new Byte((byte) 0x9B)); //SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+        unicodeToCP1252.put("\u0153", new Byte((byte) 0x9C)); //LATIN SMALL LIGATURE OE
+        unicodeToCP1252.put("\u017E", new Byte((byte) 0x9E)); //LATIN SMALL LETTER Z WITH CARON
+        unicodeToCP1252.put("\u0178", new Byte((byte) 0x9F)); //LATIN CAPITAL LETTER Y WITH DIAERESIS
 
         for (int i = 0; i < string.length; i++) {
             byte[] extended = new byte[isoString.length + 1];
             System.arraycopy(isoString, 0, extended, 0, isoString.length);
             isoString = extended;
 
-            if (isoChars.containsKey("" + string[i])) {
-                Byte subst = (Byte) isoChars.get("" + string[i]);
-//                System.out.println("Subst: " + subst);
-                isoString[isoString.length - 1] = subst.byteValue();
-//                System.out.println(Integer.toHexString(isoString[isoString.length - 1]));
+            // Transform Unicode character to unsigned byte
+            if (unicodeToCP1252.containsKey("" + string[i])) {
+                Byte subst = (Byte) unicodeToCP1252.get("" + string[i]);
+                isoString[isoString.length - 1] = (byte) (subst.byteValue() & 0xFF);
             } else {
-                isoString[isoString.length - 1] = (byte) string[i];
+                isoString[isoString.length - 1] = (byte) (string[i] & 0xFF);
             }
         }
         return isoString;
     }
 
-    private char[] decodeIso8859_15(byte[] bytes) {
+    private char[] decodeCP1252(byte[] bytes) {
         char[] utfString = new char[0];
 
-        Hashtable isoChars = new Hashtable();
-        isoChars.put(new Byte((byte) 0xa4), "\u20ac"); // EURO SIGN
-        isoChars.put(new Byte((byte) 0xa6), "\u0160"); // LATIN CAPITAL LETTER S WITH CARON
-        isoChars.put(new Byte((byte) 0xa8), "\u0161"); // LATIN SMALL LETTER S WITH CARON
-        isoChars.put(new Byte((byte) 0xb4), "\u017d"); // LATIN CAPITAL LETTER Z WITH CARON
-        isoChars.put(new Byte((byte) 0xb8), "\u017e"); // LATIN SMALL LETTER Z WITH CARON
-        isoChars.put(new Byte((byte) 0xbc), "\u0152"); // LATIN CAPITAL LIGATURE OE
-        isoChars.put(new Byte((byte) 0xbd), "\u0153"); // LATIN SMALL LIGATURE OE
-        isoChars.put(new Byte((byte) 0xbe), "\u0178"); // LATIN CAPITAL LETTER Y WITH DIAERESIS
+        Hashtable cp1252toUnicode = new Hashtable();
+        cp1252toUnicode.put(new Byte((byte) 0x80), "\u20AC"); // EURO SIGN
+        cp1252toUnicode.put(new Byte((byte) 0x81), "\u003F"); // UNDEFINED
+        cp1252toUnicode.put(new Byte((byte) 0x82), "\u201A"); // SINGLE LOW-9 QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x83), "\u0192"); // LATIN SMALL LETTER F WITH HOOK
+        cp1252toUnicode.put(new Byte((byte) 0x84), "\u201E"); // DOUBLE LOW-9 QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x85), "\u2026"); // HORIZONTAL ELLIPSIS
+        cp1252toUnicode.put(new Byte((byte) 0x86), "\u2020"); // DAGGER
+        cp1252toUnicode.put(new Byte((byte) 0x87), "\u2021"); // DOUBLE DAGGER
+        cp1252toUnicode.put(new Byte((byte) 0x88), "\u02C6"); // MODIFIER LETTER CIRCUMFLEX ACCENT
+        cp1252toUnicode.put(new Byte((byte) 0x89), "\u2030"); // PER MILLE SIGN
+        cp1252toUnicode.put(new Byte((byte) 0x8A), "\u0160"); // LATIN CAPITAL LETTER S WITH CARON
+        cp1252toUnicode.put(new Byte((byte) 0x8B), "\u2039"); // SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x8C), "\u0152"); // LATIN CAPITAL LIGATURE OE
+        cp1252toUnicode.put(new Byte((byte) 0x8D), "\u003F"); // UNDEFINED
+        cp1252toUnicode.put(new Byte((byte) 0x8E), "\u017D"); // LATIN CAPITAL LETTER Z WITH CARON
+        cp1252toUnicode.put(new Byte((byte) 0x8F), "\u003F"); // UNDEFINED
+        cp1252toUnicode.put(new Byte((byte) 0x90), "\u003F"); // UNDEFINED
+        cp1252toUnicode.put(new Byte((byte) 0x91), "\u2018"); // LEFT SINGLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x92), "\u2019"); // RIGHT SINGLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x93), "\u201C"); // LEFT DOUBLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x94), "\u201D"); // RIGHT DOUBLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x95), "\u2022"); // BULLET
+        cp1252toUnicode.put(new Byte((byte) 0x96), "\u2013"); // EN DASH
+        cp1252toUnicode.put(new Byte((byte) 0x97), "\u2014"); // EM DASH
+        cp1252toUnicode.put(new Byte((byte) 0x98), "\u02DC"); // SMALL TILDE
+        cp1252toUnicode.put(new Byte((byte) 0x99), "\u2122"); // TRADE MARK SIGN
+        cp1252toUnicode.put(new Byte((byte) 0x9A), "\u0161"); // LATIN SMALL LETTER S WITH CARON
+        cp1252toUnicode.put(new Byte((byte) 0x9B), "\u203A"); // SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+        cp1252toUnicode.put(new Byte((byte) 0x9C), "\u0153"); // LATIN SMALL LIGATURE OE
+        cp1252toUnicode.put(new Byte((byte) 0x9D), "\u003F"); // UNDEFINED
+        cp1252toUnicode.put(new Byte((byte) 0x9E), "\u017E"); // LATIN SMALL LETTER Z WITH CARON
+        cp1252toUnicode.put(new Byte((byte) 0x9F), "\u0178"); // LATIN CAPITAL LETTER Y WITH DIAERESIS
 
         for (int i = 0; i < bytes.length; i++) {
             char[] extended = new char[utfString.length + 1];
@@ -541,13 +580,13 @@ public class GMX extends SmsConnector {
             utfString = extended;
 
             Byte b = new Byte(bytes[i]);
-            if (isoChars.containsKey(b)) {
-                String subst = (String) isoChars.get(b);
-//                System.out.println("Subst: " + subst);
+            if (cp1252toUnicode.containsKey(b)) {
+                String subst = (String) cp1252toUnicode.get(b);
                 utfString[utfString.length - 1] = subst.charAt(0);
-//                System.out.println("" + (utfString[utfString.length - 1]));
             } else {
-                utfString[utfString.length - 1] = (char) bytes[i];
+                // Create the Unicode char for further processing
+                // from the unsigned byte value
+                utfString[utfString.length - 1] = (char) (bytes[i] & 0xFF);
             }
         }
         return utfString;
@@ -616,6 +655,20 @@ public class GMX extends SmsConnector {
 //#         gui.debug("Serverantwort geparsed: " + result);
         //#endif
         return result;
+    }
+
+    private String maskSpecialChars(String text) {
+        StringBuffer escaped = new StringBuffer(text);
+        char[] toEscape = "\\<>".toCharArray();
+
+        for(int i = 0; i < toEscape.length; i++) {
+            for (int j = 0; j < escaped.length(); j++) {
+                 if (escaped.charAt(j) == toEscape[i]) {
+                     escaped.insert(j++, '\\');
+                 }
+            }
+        }
+        return escaped.toString();
     }
 
     private String anonymizeProtocolMsg(String message) {
