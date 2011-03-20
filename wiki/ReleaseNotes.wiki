@@ -14,9 +14,14 @@ Die aktuellen Release Notes zu webSMSsend
 ----
 
 == bisher unveröffentlicht ==
+
+  * Allgemein: Wenn die Frei-SMS verbraucht sind, zeigt die Benutzerauswahl beim Accountwechsel "(Keine Daten)" anstatt der Benutzeraccounts. Dies funktioniert nun (Issue32)  
+  * Blackberry: Fehler beim Start "exception java.lang.nullpointerexception" behoben (Issue31)
+  * Blackberry: Die Textfelder für die Telefonnummer und den SMS-Text werden nun linksbündig angezeigt
   * GMX: Abbruch des Versands unter Windows Mobile 6.5 mit AplixJBlend Java-VM behoben
   * GMX: Kodierung der zu übertragenden Zeichen eingeführt, so dass Sonderzeichen in SMS korrekt versendet werden (vgl. Issue 14) und Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben sind.
   * GMX: Berechnung der benötigten SMS bezieht Zeichen, die von GMX als zwei Zeichen gewertet werden, mit ein.
+
 
 == 0.64.2  ==
 Testversion (kein offizielles Release)
