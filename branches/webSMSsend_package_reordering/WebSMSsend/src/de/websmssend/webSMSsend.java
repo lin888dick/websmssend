@@ -1421,7 +1421,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         if (image1 == null) {//GEN-END:|244-getter|0|244-preInit
             // write pre-init user code here
             try {//GEN-BEGIN:|244-getter|1|244-@java.io.IOException
-                image1 = Image.createImage("/webSMSsend/sendIcon.png");
+                image1 = Image.createImage("/de/websmssend/res/sendIcon.png");
             } catch (java.io.IOException e) {//GEN-END:|244-getter|1|244-@java.io.IOException
                 e.printStackTrace();
             }//GEN-LINE:|244-getter|2|244-postInit
@@ -2134,7 +2134,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         if (updateIcon == null) {//GEN-END:|419-getter|0|419-preInit
             // write pre-init user code here
             try {//GEN-BEGIN:|419-getter|1|419-@java.io.IOException
-                updateIcon = Image.createImage("/webSMSsend/updateIcon.png");
+                updateIcon = Image.createImage("/de/websmssend/res/updateIcon.png");
             } catch (java.io.IOException e) {//GEN-END:|419-getter|1|419-@java.io.IOException
                 e.printStackTrace();
             }//GEN-LINE:|419-getter|2|419-postInit
