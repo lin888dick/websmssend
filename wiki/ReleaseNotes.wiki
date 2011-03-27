@@ -15,7 +15,7 @@ Die aktuellen Release Notes zu webSMSsend
 
 == bisher unveröffentlicht ==
 
- * NN
+ * GMX: Text als Absenderkennung ist möglich. (Issue 7)
 
 == 0.65.0 ==
 
