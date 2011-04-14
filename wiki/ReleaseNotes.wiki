@@ -4,7 +4,7 @@ Die aktuellen Release Notes zu webSMSsend
 
 ==0.65.5==
 
-  * Allgemein: Wenn die Frei-SMS verbraucht sind, zeigt die Benutzerauswahl beim Accountwechsel "(Keine Daten)" anstatt der Benutzeraccounts. Dies funktioniert nun (Issue32)  
+  * Allgemein: Wenn die Frei-SMS verbraucht sind, zeigt die Benutzerkontenauswahl beim Accountwechsel "(Keine Daten)" anstatt der Benutzeraccounts. Dies funktioniert nun (Issue32)  
   * Blackberry: Fehler beim Start "exception java.lang.nullpointerexception" behoben (Issue31)
   * Blackberry: Die Textfelder für die Telefonnummer und den SMS-Text werden nun linksbündig angezeigt
   * GMX: Abbruch des Versands unter Windows Mobile 6.5 mit AplixJBlend Java-VM behoben
@@ -14,7 +14,7 @@ Die aktuellen Release Notes zu webSMSsend
 == bisher unveröffentlicht ==
 
  * GMX: Text als Absenderkennung ist möglich. (Issue 7)
- * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen
+ * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen (Issue 38)
 
 ----
 
