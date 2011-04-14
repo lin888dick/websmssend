@@ -11,11 +11,12 @@ Die aktuellen Release Notes zu webSMSsend
   * GMX: Kodierung der zu übertragenden Zeichen eingeführt, so dass Sonderzeichen in SMS korrekt versendet werden (vgl. Issue 14) und Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben sind.
   * GMX: Berechnung der benötigten SMS bezieht Zeichen, die von GMX als zwei Zeichen gewertet werden, mit ein.
 
-----
-
 == bisher unveröffentlicht ==
 
  * GMX: Text als Absenderkennung ist möglich. (Issue 7)
+ * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen
+
+----
 
 == 0.65.0 ==
 
