@@ -194,7 +194,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         }
         return 0;
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Initialize StorageManagers and SmsConnector">
         /**
     * initializes all StorageManagers (AppSettingsManager and UserAccountManager) for first use
@@ -233,7 +233,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
              debug("ActiveAccount: " + appSettings.getActiveAccount());
          }
     }
-    
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Temp-SMS and Last-SMS handling methods">
@@ -268,7 +268,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         getTxtFieldPhoneNumber().setString("");
         getDisplay().setCurrentItem(getTxtFieldPhoneNumber());
     }
-    
+
     private void retrieveLastSms() {
         try {
             getTxtFieldSmsText().setString(appSettings.getLastSmsText());
@@ -278,7 +278,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
             debug("retrieveLastSms failed");
         }
     }
-    
+
     private void saveLastSms() {
         try {
             appSettings.setLastSmsText(getTxtFieldSmsText().getString());
@@ -287,7 +287,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
             debug("saveLastSms failed");
         }
     }
-    
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="AutoUpdate methods">
@@ -1103,8 +1103,7 @@ public class webSMSsend extends MIDlet implements CommandListener, IGui {
         if (txtFieldPhoneNumber == null) {//GEN-END:|156-getter|0|156-preInit
             // write pre-init user code here
             txtFieldPhoneNumber = new TextField("Empf\u00E4nger (Handynummer):", null, 32, TextField.PHONENUMBER);//GEN-BEGIN:|156-getter|1|156-postInit
-            txtFieldPhoneNumber.setLayout(ImageItem.LAYOUT_LEFT);
-            txtFieldPhoneNumber.setPreferredSize(-1, -1);//GEN-END:|156-getter|1|156-postInit
+            txtFieldPhoneNumber.setLayout(ImageItem.LAYOUT_LEFT);//GEN-END:|156-getter|1|156-postInit
             // write post-init user code here
         }//GEN-BEGIN:|156-getter|2|
         return txtFieldPhoneNumber;
