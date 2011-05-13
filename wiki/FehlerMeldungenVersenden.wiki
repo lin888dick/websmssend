@@ -5,6 +5,7 @@
 Nichts ist perfekt, auch WebSMSsend nicht. Immer wieder treten Fehler auf, die ganz unterschiedlichste Gründe haben. Es empfiehlt sich folgendes Vorgehen:
 
   # Überprüfen ob in den Wikis der Fehler schon beschrieben wurde
+  # Überprüfen ob den [Forum Forenthreads] der Fehler schon beschrieben wurde
   # Überprüfen ob der Fehler unter [http://code.google.com/p/websmssend/issues/list Issues] schon beschrieben wurde, falls nicht ein neues Issue mit einer Fehlerbeschreibung erstellen
   #  Die Debug-Meldungen an die Entwickler unter Angabe der Issue Nummer (alle Issues sind nummeriert) versenden
 
