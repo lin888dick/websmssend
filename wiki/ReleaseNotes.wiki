@@ -2,6 +2,13 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+==0.70.0==
+
+ * GMX: Text als Absenderkennung ist möglich. (Issue 7)
+ * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen (Issue 38)
+
+----
+
 ==0.65.5==
 
   * Allgemein: Wenn die Frei-SMS verbraucht sind, zeigt die Benutzerkontenauswahl beim Accountwechsel "(Keine Daten)" anstatt der Benutzeraccounts. Dies funktioniert nun (Issue32)  
@@ -10,13 +17,6 @@ Die aktuellen Release Notes zu webSMSsend
   * GMX: Abbruch des Versands unter Windows Mobile 6.5 mit AplixJBlend Java-VM behoben
   * GMX: Kodierung der zu übertragenden Zeichen eingeführt, so dass Sonderzeichen in SMS korrekt versendet werden (vgl. Issue 14) und Fehler auf Plattformen, die UTF-8-Zeichenkodierung verwenden (z. B. LG GS 290 Cookie Fresh) behoben sind.
   * GMX: Berechnung der benötigten SMS bezieht Zeichen, die von GMX als zwei Zeichen gewertet werden, mit ein.
-
-== bisher unveröffentlicht ==
-
- * GMX: Text als Absenderkennung ist möglich. (Issue 7)
- * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen (Issue 38)
-
-----
 
 == 0.65.0 ==
 
