@@ -6,6 +6,7 @@ Die aktuellen Release Notes zu webSMSsend
 
  * GMX: Text als Absenderkennung ist möglich. (Issue 7)
  * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen (Issue 38)
+ * Diverse kleinere Bugs und Anzeigefehler behoben
 
 ----
 
