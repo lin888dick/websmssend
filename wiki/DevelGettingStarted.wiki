@@ -8,3 +8,7 @@ The integrated development environment (IDE) utilizes the following tools and te
   * [http://netbeans.org Netbeans]
   * [http://www.oracle.com/technetwork/java/index-jsp-137162.html Sun Java Wireless Toolkit] 2.5 or newer
   * [http://www.oracle.com/technetwork/java/javase/downloads/index.html Java Development Kit] 
+
+Für den O2-Connector werden im Moment folgende 2 Zertifikate benötigt:
+  * [http://websmssend.googlecode.com/svn/wiki/VeriSign%20Class%203%20Public%20Primary%20Certification%20Authority%20-%20G5.cer VeriSign Class 3 Public Primary Certification Authority - G5]
+  * [http://websmssend.googlecode.com/svn/wiki/VeriSign%20Inc.cer VeriSign International Server CA - Class 3]
