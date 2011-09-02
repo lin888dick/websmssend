@@ -1,24 +1,17 @@
 #summary SSL-Zertifikat Installation
 
-= Introduction =
+= Einführung =
 
-Immer wieder treten Native Error 31 und Native Error -7372 auf. Bei vielen hilft das installieren des O2online SSL Zertifikats:
+Immer wieder treten Native Error 31 und Native Error -7372 auf. Zudem haben einige Handys Probleme die SSL-Zertifikate von O2 zu verifizieren. Bei vielen hilft das installieren der O2online SSL Zertifikate:
 
 
 = Details =
 
-
-Anleitung (mit Chrome, geht aber bei den meisten Browsern sehr ähnlich)
-  * auf dem PC mit einem Webbrowser auf login.o2online.de gehen
-  * mit einem Rechtsklick Seiteninfos aufrufen
-  * im Dialog auf Zertifikatinformationen gehen
-  * dort auf Details klicken
-  * und auf den Button "in Datei kopieren" klicken
-  * im folgenden Wizard das Zertifikat als cer-Datei auf dem Handy abspeichern
-  * im Dateimanager des Handys auf die Zertifikat-Datei klicken
-  * Jetzt sollte eine Meldung kommen dass das Zertifikat installiert wird
-
-
-
-
-http://websmssend.googlecode.com/files/SSL%20Zertifikat%20speichern.png
+Für den O2-Connector werden im Moment folgende 2 Zertifikate benötigt:
+  * [http://websmssend.googlecode.com/svn/wiki/VeriSign%20Class%203%20Public%20Primary%20Certification%20Authority%20-%20G5.cer VeriSign Class 3 Public Primary Certification Authority - G5]
+  * [http://websmssend.googlecode.com/svn/wiki/VeriSign%20Inc.cer VeriSign International Server CA - Class 3]
+ 
+= Anleitung =
+  # Die 2 Zertifikate herunterladen und auf dem Handy abspeichern
+  # Im Dateimanager des Handys auf die Zertifikat-Datei klicken
+  # Jetzt sollte eine Meldung kommen dass das Zertifikat installiert wird
