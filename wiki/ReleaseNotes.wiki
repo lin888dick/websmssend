@@ -2,13 +2,17 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+==0.71.0==
+
+ * O2: Nach Änderungen auf der O2-Homepage musste der O2-Konnektor angepasst werden. (Issue 52)
+
+----
+
 ==0.70.0==
 
  * GMX: Text als Absenderkennung ist möglich. (Issue 7)
  * Allgemein: Telefonbuch-Funktion wurde hinzugefügt. Nun können auch Handys, die dies bisher noch nicht unterstützt haben, auf das Telefonbuch zugreifen (Issue 38)
  * Diverse kleinere Bugs und Anzeigefehler behoben
-
-----
 
 ==0.65.5==
 
