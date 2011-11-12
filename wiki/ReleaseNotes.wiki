@@ -2,11 +2,15 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+==0.75.0==
+
+ * Sipgate: Es ist nun möglich SMS mit einem Sipgate-Account zu versenden (Issue 34)
+
+----
+
 ==0.71.0==
 
  * O2: Nach Änderungen auf der O2-Homepage musste der O2-Konnektor angepasst werden. (Issue 52)
-
-----
 
 ==0.70.0==
 
