@@ -1,0 +1,11 @@
+MIDlet-1: webSMSsend,/icon.png,de.websmssend.webSMSsend
+MIDlet-Jar-Size: 92550
+MIDlet-Jar-URL: webSMSsend_OviStore.jar
+MIDlet-Name: webSMSsend
+MIDlet-Permissions: javax.microedition.io.Connector.https, javax.microedition.io.Connector.http, javax.microedition.io.Connector.ssl, javax.microedition.pim.ContactList.read
+MIDlet-Vendor: maximum.blogsite.org
+MIDlet-Version: 0.71.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
+Nokia-MIDlet-On-Screen-Keypad: no
+Nokia-Scalable-Icon-MIDlet-1: /icon.svg
