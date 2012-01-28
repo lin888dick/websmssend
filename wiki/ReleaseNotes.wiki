@@ -2,7 +2,7 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
-==0.75.0 (in Planung) ==
+==0.75.0==
 
  * Sipgate: Es ist nun möglich SMS mit einem Sipgate-Account zu versenden (Issue 34)
  * Allgemein: Das Nokia N8 scheint WebSMSsend (auch alte Versionen) nicht ausführen zu können
