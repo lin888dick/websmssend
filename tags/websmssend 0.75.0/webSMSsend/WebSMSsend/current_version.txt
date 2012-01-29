@@ -1,0 +1,2 @@
+0.70.0
+http://websmssend.googlecode.com/svn/trunk/webSMSsend/WebSMSsend/update.html
