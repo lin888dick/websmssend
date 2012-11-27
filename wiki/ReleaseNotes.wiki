@@ -2,11 +2,15 @@
 
 Die aktuellen Release Notes zu webSMSsend
 
+==0.80.1==
+
+ * O2: funktioniert wieder
+
+----
+
 ==0.80.0==
 
  * GMX: funktioniert wieder. Die neue API der GMX-Android-App wird nun verwendet. Dafür Dank an Felix Bechstein's WebSMS-Projekt (http://code.google.com/p/websmsdroid/) für die Vorlage
-
-----
 
 ==0.75.0==
 
